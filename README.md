@@ -15,6 +15,39 @@ cd プロジェクト名
 expo start:web
 ```
 
+## オフラインをサポートする
+
+まずejectします。
+
+```bash
+expo customize:web
+```
+
+生成したいファイル名をラジオボタン形式で聞かれるので、**webpack.config.js** を選択します。
+**webpack.config.js** ファイルがルートディレクトリに作成されますので編集します。
+
+```js
+// webpack.config.js
+const createExpoWebpackConfigAsync = require('@expo/webpack-config');
+
+module.exports = async function (env, argv) {
+  const config = await createExpoWebpackConfigAsync(
+    {
+      ...env,
+      // Passing true will enable the default Workbox + Expo SW configuration.
+      offline: true,
+    },
+    argv,
+  );
+  // Customize the config before returning it.
+  return config;
+};
+```
+
+> 参考にしたページ
+>
+> https://github.com/expo/fyi/blob/master/enabling-web-service-workers.md
+
 ## PWA としてアプリをビルドする
 
 pwaに必要な設定をapp.jsonファイルに記述します。
