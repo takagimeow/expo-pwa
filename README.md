@@ -80,6 +80,11 @@ pwaに必要な設定をapp.jsonファイルに記述します。
 }
 ```
 
+> マニフェストファイルのそれぞれの項目についての解説
+>
+> https://developer.mozilla.org/ja/docs/Web/Manifest
+> https://murashun.jp/blog/20171210-01.html
+
 設定が終わったらアプリをビルドします。
 
 ```bash

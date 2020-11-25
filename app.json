@@ -29,22 +29,18 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png",
-      "backgroundColor": "",
-      "description": "",
-      "dir": "",
-      "display": "",
-      "lang": "",
-      "name": "",
-      "orientation": "",
+      "backgroundColor": "アプリケーションの説明",
+      "description": "Expo",
+      "dir": "auto",
+      "display": "standalone",
+      "lang": "ja",
+      "name": "Expo PWA",
+      "orientation": "portrait",
       "scope": "",
-      "shortName": "",
-      "startUrl": "",
-      "themeColor": "",
-      "crossorigin": "",
-      "relatedApplications": "",
-      "preferRelatedApplications": "",
-      "barStyle": "",
-      "splash": ""
+      "shortName": "Expo PWA",
+      "startUrl": "https://takagimeow-expo-pwa.com",
+      "themeColor": "#3740ff",
+      "preferRelatedApplications": false
     }
   }
 }
