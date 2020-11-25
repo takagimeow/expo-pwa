@@ -6,7 +6,9 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "lint": "npx eslint . --ext ts",
+    "lint:fix": "npx eslint . --ext ts --ext tsx --fix"
   },
   "jest": {
     "preset": "jest-expo"
@@ -25,6 +27,8 @@
     "expo-splash-screen": "~0.6.2",
     "expo-status-bar": "~1.0.2",
     "expo-web-browser": "~8.5.0",
+    "lunr": "^2.3.9",
+    "lunr-languages": "^1.4.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
@@ -37,7 +41,18 @@
     "@babel/core": "~7.9.0",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
+    "@typescript-eslint/eslint-plugin": "^4.8.2",
+    "@typescript-eslint/parser": "^4.8.2",
+    "eslint": "^7.14.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-airbnb-typescript": "^12.0.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-config-universe": "^6.0.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.1.4",
     "jest-expo": "~39.0.0",
+    "jest-expo-enzyme": "^1.0.3",
+    "prettier": "^2.2.0",
     "typescript": "~3.9.5"
   },
   "private": true

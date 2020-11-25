@@ -28,7 +28,23 @@
       }
     },
     "web": {
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/favicon.png",
+      "backgroundColor": "",
+      "description": "",
+      "dir": "",
+      "display": "",
+      "lang": "",
+      "name": "",
+      "orientation": "",
+      "scope": "",
+      "shortName": "",
+      "startUrl": "",
+      "themeColor": "",
+      "crossorigin": "",
+      "relatedApplications": "",
+      "preferRelatedApplications": "",
+      "barStyle": "",
+      "splash": ""
     }
   }
 }
