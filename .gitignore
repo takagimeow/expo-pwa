@@ -13,3 +13,9 @@ web-build/
 .DS_Store
 
 app.config.js
+
+# components
+components/NeumorphismCalendar
+
+# log
+yarn-error.log

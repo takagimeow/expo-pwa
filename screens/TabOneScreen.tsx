@@ -1,3 +1,4 @@
+import { Calendar } from 'components/Calendar';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 
@@ -10,6 +11,7 @@ export default function TabOneScreen() {
       <Text style={styles.title}>Tab One</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <EditScreenInfo path="/screens/TabOneScreen.js" />
+      <Calendar onPress={() => console.log('onPress')} />
     </View>
   );
 }
