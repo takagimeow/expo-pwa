@@ -1,16 +1,24 @@
+import { StackScreenProps } from '@react-navigation/stack';
 import { Calendar } from 'components/Calendar';
 import { Note } from 'components/Note';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
+import { TabOneParamList } from 'types';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 
-export default function TabOneScreen() {
+type Props = StackScreenProps<TabOneParamList, 'MemoInputScreen'>;
+
+export default function TabOneScreen({ navigation, route }: Props) {
   return (
     <View style={styles.container}>
       <Calendar onPress={() => console.log('onPress')} />
-      <Note />
+      <Note
+        onPress={() => {
+          navigation.navigate('MemoInputScreen');
+        }}
+      />
     </View>
   );
 }

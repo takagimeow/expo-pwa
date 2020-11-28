@@ -10,6 +10,7 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
+import { MemoInputScreen } from 'screens/MemoInputScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -56,6 +57,7 @@ function TabOneNavigator() {
   return (
     <TabOneStack.Navigator>
       <TabOneStack.Screen name="TabOneScreen" component={TabOneScreen} />
+      <TabOneStack.Screen name="MemoInputScreen" component={MemoInputScreen} />
     </TabOneStack.Navigator>
   );
 }

@@ -38,11 +38,7 @@ export const NoteHeader = ({ calendarCellId }: { calendarCellId: string }) => {
   );
 };
 
-export const Note = ({
-  onPress,
-}: {
-  onPress: (event: GestureResponderEvent, index: number) => void | undefined;
-}) => {
+export const Note = ({ onPress }: { onPress: () => void | undefined }) => {
   const [memo, setMemo] = useState('');
   const { calendarCellId } = useLogic();
   useEffect(() => {
@@ -63,7 +59,7 @@ export const Note = ({
     })();
   }, [calendarCellId]);
   return (
-    <TouchableOpacity activeOpacity={0.6}>
+    <TouchableOpacity activeOpacity={0.6} onPress={() => onPress()}>
       <View
         style={[
           tailwind('w-full'),
