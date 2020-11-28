@@ -43,7 +43,7 @@ export const useLogic = ({
       return () => {};
     }
     const d: Date = new Date();
-    const thisYear = d.getFullYear() - 1;
+    const thisYear = d.getFullYear();
     const thisMonth = d.getMonth() + 1;
     localDispatch({
       type: 'changeYear',
@@ -72,83 +72,77 @@ export const useLogic = ({
   /**
    * 次の月を表示するボタンをタップしたときのハンドラ
    */
-  const handlePressPreviousMonth = React.useCallback(
-    (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-      console.log('month: ', month);
-      if (month === 1) {
-        localDispatch({
-          type: 'changeYear',
-          payload: year - 1,
-        });
-        localDispatch({
-          type: 'changeMonth',
-          payload: 12,
-        });
-        localDispatch({
-          type: 'changeMonthName',
-          payload: monthNames[11],
-        });
-        localDispatch({
-          type: 'changeDates',
-          payload: create5x7Cells(year - 1, 12),
-        });
-      } else {
-        localDispatch({
-          type: 'changeMonth',
-          payload: month - 1,
-        });
-        localDispatch({
-          type: 'changeMonthName',
-          payload: monthNames[month - 2],
-        });
-        localDispatch({
-          type: 'changeDates',
-          payload: create5x7Cells(year, month - 1),
-        });
-      }
-    },
-    [year, month, monthName],
-  );
+  const handlePressLastMonth = React.useCallback(() => {
+    console.log('month: ', month);
+    if (month === 1) {
+      localDispatch({
+        type: 'changeYear',
+        payload: year - 1,
+      });
+      localDispatch({
+        type: 'changeMonth',
+        payload: 12,
+      });
+      localDispatch({
+        type: 'changeMonthName',
+        payload: monthNames[11],
+      });
+      localDispatch({
+        type: 'changeDates',
+        payload: create5x7Cells(year - 1, 12),
+      });
+    } else {
+      localDispatch({
+        type: 'changeMonth',
+        payload: month - 1,
+      });
+      localDispatch({
+        type: 'changeMonthName',
+        payload: monthNames[month - 2],
+      });
+      localDispatch({
+        type: 'changeDates',
+        payload: create5x7Cells(year, month - 1),
+      });
+    }
+  }, [year, month, monthName]);
 
   /**
    * 前月を表示するボタンをタップしたときのハンドラ
    */
-  const handlePressNextMonth = React.useCallback(
-    (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-      if (month === 12) {
-        localDispatch({
-          type: 'changeYear',
-          payload: year + 1,
-        });
-        localDispatch({
-          type: 'changeMonth',
-          payload: 1,
-        });
-        localDispatch({
-          type: 'changeMonthName',
-          payload: monthNames[0],
-        });
-        localDispatch({
-          type: 'changeDates',
-          payload: create5x7Cells(year + 1, 1),
-        });
-      } else {
-        localDispatch({
-          type: 'changeMonth',
-          payload: month + 1,
-        });
-        localDispatch({
-          type: 'changeMonthName',
-          payload: monthNames[month],
-        });
-        localDispatch({
-          type: 'changeDates',
-          payload: create5x7Cells(year, month + 1),
-        });
-      }
-    },
-    [year, month],
-  );
+  const handlePressNextMonth = React.useCallback(() => {
+    if (month === 12) {
+      localDispatch({
+        type: 'changeYear',
+        payload: year + 1,
+      });
+      localDispatch({
+        type: 'changeMonth',
+        payload: 1,
+      });
+      localDispatch({
+        type: 'changeMonthName',
+        payload: monthNames[0],
+      });
+      localDispatch({
+        type: 'changeDates',
+        payload: create5x7Cells(year + 1, 1),
+      });
+    } else {
+      localDispatch({
+        type: 'changeMonth',
+        payload: month + 1,
+      });
+      localDispatch({
+        type: 'changeMonthName',
+        payload: monthNames[month],
+      });
+      localDispatch({
+        type: 'changeDates',
+        payload: create5x7Cells(year, month + 1),
+      });
+    }
+  }, [year, month]);
 
   /**
    * 日付のセルをタップしたときのハンドラ
@@ -172,7 +166,7 @@ export const useLogic = ({
     dayOfTheWeekList,
     // 関数
     handlePressDate,
-    handlePressPreviousMonth,
+    handlePressLastMonth,
     handlePressNextMonth,
   };
 };

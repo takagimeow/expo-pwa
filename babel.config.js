@@ -23,6 +23,7 @@ module.exports = function (api) {
 						reducers: "./reducers",
 						types: "./types.tsx",
 						classes: "./classes",
+						store: "./store",
 					},
 				},
 			],

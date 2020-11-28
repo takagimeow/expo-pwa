@@ -1,4 +1,5 @@
 export interface CalendarCellData {
+  id: string;
   month: number;
   day: number;
 }

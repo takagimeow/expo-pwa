@@ -5,12 +5,14 @@ import tailwind from 'tailwind-rn';
 import { CalendarCellData } from 'components/Calendar/redux';
 
 export const CalendarCell = ({
+  id,
   month,
   day,
   columnNumber,
   rowNumber,
   displayedMonth,
 }: {
+  id: string;
   month: number;
   day: number;
   columnNumber: number;
@@ -50,7 +52,7 @@ export const CalendarCell = ({
     <View style={[tailwindContainerStyle, tailwindContainerBorderStyle]}>
       <TouchableOpacity
         style={[tailwind('flex flex-1')]}
-        onPress={() => console.log('押されたよ: ', calculatedColumnNumber)}
+        onPress={() => console.log('押されたよ: ', id)}
       >
         <View style={[tailwind('flex flex-1')]}>
           <Text style={[tailwindDateNumberTextStyle]}>{day}</Text>

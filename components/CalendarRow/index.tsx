@@ -16,6 +16,7 @@ export const CalendarRow = ({
   const cells = cellDataList.map((cellData: CalendarCellData, index: number) => {
     return (
       <CalendarCell
+        key={`CalendarCell_${displayedMonth + index + rowNumber}`}
         {...cellData}
         rowNumber={rowNumber}
         columnNumber={index}
