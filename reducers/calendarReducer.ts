@@ -4,7 +4,7 @@ const today = new Date();
 
 const INITIAL_STATE = {
   month: today.getMonth() + 1,
-  selectedCalendarCell: '',
+  selectedCalendarCellId: '',
 };
 
 export const calendarReducer = (
@@ -20,7 +20,7 @@ export const calendarReducer = (
     case CALENDAR_SELECTED_CELL_ID_CHANGE:
       return {
         ...state,
-        selectedCalendarCell: action.payload,
+        selectedCalendarCellId: action.payload,
       };
     default:
       return state;

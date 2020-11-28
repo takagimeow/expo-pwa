@@ -1,5 +1,6 @@
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { CalendarRow } from 'components/CalendarRow';
+import { dayOfTheWeekList } from 'constants/Calendar';
 import React from 'react';
 import { View, Text, GestureResponderEvent, TouchableOpacity } from 'react-native';
 import { responsiveHeight } from 'react-native-responsive-dimensions';
@@ -14,7 +15,6 @@ export const Calendar = ({
 }) => {
   const {
     state,
-    dayOfTheWeekList,
     // handlePressDate,
     // handlePressPreviousMonth,
     handlePressLastMonth,
@@ -57,13 +57,13 @@ export const Calendar = ({
   return (
     <View
       style={[
-        tailwind('h-screen w-full'),
+        tailwind('w-full'),
         {
           height: responsiveHeight(60),
         },
       ]}
     >
-      <View style={[tailwind('flex-row items-between content-between justify-between px-2 pt-2')]}>
+      <View style={[tailwind('flex-row content-between justify-between px-2 pt-2')]}>
         <TouchableOpacity
           onPress={() => {
             handlePressLastMonth();
@@ -113,7 +113,7 @@ export const Calendar = ({
       <View style={[tailwind('w-full flex-row justify-between text-center')]}>
         {headerElements}
       </View>
-      <View style={[tailwind('w-full h-auto flex-auto border-t border-gray-200')]}>{elements}</View>
+      <View style={[tailwind('w-full flex-auto border-t border-gray-200')]}>{elements}</View>
     </View>
   );
 };

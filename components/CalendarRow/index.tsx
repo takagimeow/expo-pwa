@@ -25,11 +25,7 @@ export const CalendarRow = ({
     );
   });
   return (
-    <View
-      style={[
-        tailwind('flex flex-auto flex-row justify-between h-full content-between items-between'),
-      ]}
-    >
+    <View style={[tailwind('flex flex-auto flex-row justify-between h-full content-between')]}>
       {cells}
     </View>
   );

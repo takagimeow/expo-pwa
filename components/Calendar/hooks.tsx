@@ -4,9 +4,6 @@ import { GestureResponderEvent } from 'react-native';
 import { create5x7Cells } from './callbacks';
 import { reducer } from './redux';
 
-// const dayOfTheWeekList = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const dayOfTheWeekList = ['日', '月', '火', '水', '木', '金', '土'];
-
 const monthNames = [
   'January',
   'February',
@@ -163,7 +160,6 @@ export const useLogic = ({
 
   return {
     state,
-    dayOfTheWeekList,
     // 関数
     handlePressDate,
     handlePressLastMonth,

@@ -1,4 +1,5 @@
 import { Calendar } from 'components/Calendar';
+import { Note } from 'components/Note';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 
@@ -9,6 +10,7 @@ export default function TabOneScreen() {
   return (
     <View style={styles.container}>
       <Calendar onPress={() => console.log('onPress')} />
+      <Note />
     </View>
   );
 }
