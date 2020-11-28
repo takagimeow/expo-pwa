@@ -4,7 +4,8 @@ import { GestureResponderEvent } from 'react-native';
 import { create35Box } from './callbacks';
 import { reducer } from './redux';
 
-const dayOfTheWeekList = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+// const dayOfTheWeekList = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const dayOfTheWeekList = ['日', '月', '火', '水', '木', '金', '土'];
 
 const monthNames = [
   'January',
