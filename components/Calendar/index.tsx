@@ -18,7 +18,7 @@ export const Calendar = ({
     // handlePressPreviousMonth,
     // handlePressNextMonth,
   } = useLogic({ onPress });
-  const { monthName, dates, selectedDateIndex } = state;
+  const { month, monthName, dates, selectedDateIndex } = state;
 
   /**
    * 日から土までを上部に表示するためのコンポーネント
@@ -42,8 +42,8 @@ export const Calendar = ({
       </View>
     );
   });
-  const elements = dates.map((datesRow) => {
-    return <CalendarRow dateCells={datesRow} />;
+  const elements = dates.map((datesRow, index) => {
+    return <CalendarRow cellDataList={datesRow} rowNumber={index} displayedMonth={month} />;
   });
   return (
     <View

@@ -1,11 +1,27 @@
+import { CalendarCellData } from 'components/Calendar/redux';
 import { CalendarCell } from 'components/CalendarCell';
 import React from 'react';
 import { View } from 'react-native';
 import tailwind from 'tailwind-rn';
 
-export const CalendarRow = ({ dateCells }: { dateCells: number[] }) => {
-  const cells = dateCells.map((dateNumber: number, index: number) => {
-    return <CalendarCell dateNumber={dateNumber} columnNumber={index} />;
+export const CalendarRow = ({
+  cellDataList,
+  rowNumber,
+  displayedMonth,
+}: {
+  cellDataList: CalendarCellData[];
+  displayedMonth: number;
+  rowNumber: number;
+}) => {
+  const cells = cellDataList.map((cellData: CalendarCellData, index: number) => {
+    return (
+      <CalendarCell
+        {...cellData}
+        rowNumber={rowNumber}
+        columnNumber={index}
+        displayedMonth={displayedMonth}
+      />
+    );
   });
   return (
     <View

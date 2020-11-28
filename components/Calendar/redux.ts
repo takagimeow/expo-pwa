@@ -1,8 +1,13 @@
+export interface CalendarCellData {
+  month: number;
+  day: number;
+}
+
 export interface State {
   year: number;
   month: number;
   monthName: string;
-  dates: number[][];
+  dates: CalendarCellData[][];
   initialized: boolean;
   selectedDateIndex: number;
 }
@@ -26,7 +31,7 @@ export type Action =
     }
   | {
       type: 'changeDates';
-      payload: number[][];
+      payload: CalendarCellData[][];
     }
   | {
       type: 'changeInitialized';

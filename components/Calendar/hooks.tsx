@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 import { GestureResponderEvent } from 'react-native';
 
-import { create35Box } from './callbacks';
+import { create5x7Cells } from './callbacks';
 import { reducer } from './redux';
 
 // const dayOfTheWeekList = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -59,7 +59,7 @@ export const useLogic = ({
     });
     localDispatch({
       type: 'changeDates',
-      payload: create35Box(thisYear, thisMonth),
+      payload: create5x7Cells(thisYear, thisMonth),
     });
     localDispatch({
       type: 'changeInitialized',
@@ -90,7 +90,7 @@ export const useLogic = ({
         });
         localDispatch({
           type: 'changeDates',
-          payload: create35Box(year - 1, 12),
+          payload: create5x7Cells(year - 1, 12),
         });
       } else {
         localDispatch({
@@ -103,7 +103,7 @@ export const useLogic = ({
         });
         localDispatch({
           type: 'changeDates',
-          payload: create35Box(year, month - 1),
+          payload: create5x7Cells(year, month - 1),
         });
       }
     },
@@ -130,7 +130,7 @@ export const useLogic = ({
         });
         localDispatch({
           type: 'changeDates',
-          payload: create35Box(year + 1, 1),
+          payload: create5x7Cells(year + 1, 1),
         });
       } else {
         localDispatch({
@@ -143,7 +143,7 @@ export const useLogic = ({
         });
         localDispatch({
           type: 'changeDates',
-          payload: create35Box(year, month + 1),
+          payload: create5x7Cells(year, month + 1),
         });
       }
     },
