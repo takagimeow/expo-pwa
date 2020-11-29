@@ -1,16 +1,16 @@
 {
   "expo": {
-    "name": "pwa",
-    "slug": "pwa",
+    "name": "memocal",
+    "slug": "memocal",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/memocal_icon.png",
-    "scheme": "myapp",
+    "scheme": "memocal",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/memocal_splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#cc0033"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

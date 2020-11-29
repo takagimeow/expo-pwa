@@ -97,6 +97,12 @@ expo build:web
 npx serve web-build
 ```
 
+netlifyにてデプロイする場合はローカルパッケージに expo-cli が必要になりますので、インストールしておきます。
+
+```bash
+yarn add -D expo-cli
+```
+
 ## ESLintを導入
 
 ```bash
