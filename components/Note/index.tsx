@@ -1,12 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useEffect, useState } from 'react';
+import _ from 'lodash';
+import React from 'react';
 import { View, Text, GestureResponderEvent, TouchableOpacity } from 'react-native';
 import { responsiveHeight } from 'react-native-responsive-dimensions';
 import tailwind from 'tailwind-rn';
-import _ from 'lodash';
 
 import { getNoteHeaderText } from './callbacks';
-import { useLogic } from './hooks';
 
 export interface NoteData {
   emoji: string[];
@@ -38,26 +37,15 @@ export const NoteHeader = ({ calendarCellId }: { calendarCellId: string }) => {
   );
 };
 
-export const Note = ({ onPress }: { onPress: () => void | undefined }) => {
-  const [memo, setMemo] = useState('');
-  const { calendarCellId } = useLogic();
-  useEffect(() => {
-    (async () => {
-      let note: NoteData | null = null;
-      try {
-        const jsonValue = await AsyncStorage.getItem(calendarCellId);
-        note = jsonValue != null ? JSON.parse(jsonValue) : null;
-      } catch (err) {
-        console.log(err);
-      }
-      if (_.isNil(note)) {
-        setMemo('');
-      } else {
-        setMemo(note.memo);
-        console.log('note.memo: ', note.memo);
-      }
-    })();
-  }, [calendarCellId]);
+export const Note = ({
+  calendarCellId,
+  memo,
+  onPress,
+}: {
+  calendarCellId: string;
+  memo: string;
+  onPress: () => void | undefined;
+}) => {
   return (
     <TouchableOpacity activeOpacity={0.6} onPress={() => onPress()}>
       <View

@@ -16,6 +16,12 @@ export default {
               TabTwoScreen: 'two',
             },
           },
+          Home: {
+            screens: {
+              HomeScreen: 'home',
+              MemoInputScreen: 'memo',
+            }
+          }
         },
       },
       NotFound: '*',

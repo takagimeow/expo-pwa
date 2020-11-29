@@ -1,32 +1,57 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackScreenProps } from '@react-navigation/stack';
+import { NoteData } from 'components/Note';
+import { getNoteHeaderText } from 'components/Note/callbacks';
 import _ from 'lodash';
 import React, { useState, useRef, useEffect } from 'react';
 import { TextInput, StyleSheet } from 'react-native';
-import { TabOneParamList } from 'types';
+import { useSelector } from 'react-redux';
+import { HomeParamList } from 'types';
 import * as yup from 'yup';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { NoteData } from 'components/Note';
-
-type Props = StackScreenProps<TabOneParamList, 'MemoInputScreen'>;
+type Props = StackScreenProps<HomeParamList, 'MemoInputScreen'>;
 
 export const useLogic = ({ navigation }: { navigation: Props['navigation'] }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [dateText, setDateText] = useState('');
   const [formikSchema] = useState(
     yup.object().shape({
       memo: yup.string().min(1).required(),
     }),
   );
-  const [formikInitValues] = useState({
+  const [formikInitValues, setFormikInitValues] = useState({
     memo: '',
   });
   const textInputRef: React.MutableRefObject<TextInput | null> = useRef(null);
   const calendarCellId = useSelector((state: any) => state.calendar.selectedCalendarCellId);
-  
   useEffect(() => {
-    if (textInputRef) {
-      textInputRef?.current?.focus();
-    }
+    const headerText = getNoteHeaderText(calendarCellId);
+    setDateText(`${headerText.date}（${headerText.dayOfTheWeek}）`);
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      if (textInputRef) {
+        textInputRef?.current?.focus();
+      }
+      let note: NoteData | null = null;
+      try {
+        const jsonValue = await AsyncStorage.getItem(calendarCellId);
+        note = jsonValue != null ? JSON.parse(jsonValue) : null;
+      } catch (err) {
+        console.log(err);
+      }
+      if (_.isNil(note)) {
+        console.log('保存されたメモはありまえせんでした');
+      } else {
+        setFormikInitValues({
+          memo: note.memo,
+        });
+        console.log('note.memo: ', note.memo);
+      }
+
+      setIsLoaded(true);
+    })();
   }, []);
 
   const handleDone = async (values: typeof formikInitValues) => {
@@ -42,7 +67,11 @@ export const useLogic = ({ navigation }: { navigation: Props['navigation'] }) =>
       }
 
       if (_.isNil(note)) {
-        navigation.goBack();
+        note = {
+          emoji: [],
+          memo: '',
+          label: '',
+        };
       }
 
       try {
@@ -51,14 +80,20 @@ export const useLogic = ({ navigation }: { navigation: Props['navigation'] }) =>
           memo,
         });
         await AsyncStorage.setItem(calendarCellId, jsonValue);
+        console.log(`${calendarCellId}: 保存完了`);
       } catch (error) {
         console.log(error);
       }
-      navigation.goBack();
+      // navigation.goBack();
+      navigation.navigate('HomeScreen', {
+        refreshedDate: new Date().getTime(),
+      });
     }
   };
 
   return {
+    isLoaded,
+    dateText,
     formikSchema,
     formikInitValues,
     textInputRef,
