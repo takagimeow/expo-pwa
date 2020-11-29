@@ -14,7 +14,7 @@ export const HomeNavigator = () => {
         name="HomeScreen"
         component={HomeScreen}
         options={{
-          headerTitle: 'メモカレンダー',
+          headerTitle: 'めもかれ',
         }}
       />
       <HomeStack.Screen

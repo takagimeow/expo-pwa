@@ -2,6 +2,7 @@ import { CalendarCellData } from 'components/Calendar/redux';
 import _ from 'lodash';
 import React from 'react';
 import { TouchableOpacity, View, Text } from 'react-native';
+import { createCalendarCellId } from 'reducers/callbacks';
 import tailwind from 'tailwind-rn';
 
 import { useLogic } from './hooks';
@@ -21,9 +22,7 @@ export const CalendarCell = ({
   rowNumber: number;
   displayedMonth: number;
 }) => {
-  const { note, handlePress } = useLogic({ id });
-  // クリックされた日付の場所を特定するための変数
-  const calculatedColumnNumber = (columnNumber + rowNumber * 7) * 1;
+  const { note, selectedCalendarCellId, handlePress } = useLogic({ id });
   // 平日と休日で色分け
   /**
    * 平日
@@ -50,6 +49,14 @@ export const CalendarCell = ({
    */
   if (displayedMonth !== month) {
     tailwindDateNumberTextStyle = tailwind('text-sm text-gray-500');
+  }
+
+  if (id === selectedCalendarCellId) {
+    tailwindContainerBorderStyle = tailwind('border-blue-600 border-2');
+  }
+
+  if (id === createCalendarCellId(new Date())) {
+    tailwindDateNumberTextStyle = tailwind('text-green-600 font-bold');
   }
   return (
     <View style={[tailwindContainerStyle, tailwindContainerBorderStyle]}>

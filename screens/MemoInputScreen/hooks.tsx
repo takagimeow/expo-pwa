@@ -25,9 +25,18 @@ export const useLogic = ({ navigation }: { navigation: Props['navigation'] }) =>
   });
   const textInputRef: React.MutableRefObject<TextInput | null> = useRef(null);
   const calendarCellId = useSelector((state: any) => state.calendar.selectedCalendarCellId);
+  const isCalendarInitialized = useSelector((state: any) => state.calendar.isInitialized);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log('isCalendarInitialized: ', isCalendarInitialized);
+    if (isCalendarInitialized === false) {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'HomeScreen' }],
+      });
+      return;
+    }
     const headerText = getNoteHeaderText(calendarCellId);
     setDateText(`${headerText.date}（${headerText.dayOfTheWeek}）`);
   }, []);

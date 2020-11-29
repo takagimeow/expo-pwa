@@ -8,6 +8,9 @@ export const useLogic = ({ id }: { id: string }) => {
   const dispatch = useDispatch();
   const [note, setNote] = useState<NoteData | null>(null);
   const refreshedDate = useSelector((state: any) => state.calendar.refreshedDate);
+  const selectedCalendarCellId: string = useSelector(
+    (state: any) => state.calendar.selectedCalendarCellId,
+  );
   useEffect(() => {
     (async () => {
       try {
@@ -26,6 +29,7 @@ export const useLogic = ({ id }: { id: string }) => {
 
   return {
     note,
+    selectedCalendarCellId,
     handlePress,
   };
 };

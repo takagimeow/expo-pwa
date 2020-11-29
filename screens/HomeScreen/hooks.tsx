@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackScreenProps } from '@react-navigation/stack';
-import { changeSelectedCalendarCell } from 'actions/calendarActions';
+import { changeSelectedCalendarCell, changeIsCalendarInitialized } from 'actions/calendarActions';
 import { NoteData } from 'components/Note';
 import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
@@ -15,6 +15,10 @@ export const useLogic = () => {
   const calendarCellId: string = useSelector((state: any) => state.calendar.selectedCalendarCellId);
   const refreshedDate: number = useSelector((state: any) => state.calendar.refreshedDate);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(changeIsCalendarInitialized(true));
+  }, []);
 
   useEffect(() => {
     (async () => {

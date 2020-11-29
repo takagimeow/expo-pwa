@@ -2,14 +2,18 @@ import {
   CALENDAR_MONTH_CHANGE,
   CALENDAR_SELECTED_CELL_ID_CHANGE,
   CALENDAR_REFRESHED_DATE_CHANGE,
+  CALENDAR_IS_INITIALIZED_CHANGE,
 } from 'constants/Redux';
+
+import { createCalendarCellId } from './callbacks';
 
 const today = new Date();
 
 const INITIAL_STATE = {
   month: today.getMonth() + 1,
-  selectedCalendarCellId: '',
+  selectedCalendarCellId: createCalendarCellId(new Date()),
   refreshedDate: 0,
+  isInitialized: false,
 };
 
 export const calendarReducer = (
@@ -31,6 +35,11 @@ export const calendarReducer = (
       return {
         ...state,
         refreshedDate: action.payload,
+      };
+    case CALENDAR_IS_INITIALIZED_CHANGE:
+      return {
+        ...state,
+        isInitialized: action.payload,
       };
     default:
       return state;
