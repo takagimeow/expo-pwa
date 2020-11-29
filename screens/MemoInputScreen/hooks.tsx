@@ -90,9 +90,7 @@ export const useLogic = ({ navigation }: { navigation: Props['navigation'] }) =>
       // navigation.goBack();
       const newRefreshedDate = new Date().getTime();
       dispatch(changeCalendarRefreshedDate(newRefreshedDate));
-      navigation.navigate('HomeScreen', {
-        refreshedDate: newRefreshedDate,
-      });
+      navigation.navigate('HomeScreen');
     }
   };
 

@@ -19,8 +19,6 @@ export type TabTwoParamList = {
 };
 
 export type HomeParamList = {
-  HomeScreen: {
-    refreshedDate: number;
-  };
+  HomeScreen: undefined;
   MemoInputScreen: undefined;
 }

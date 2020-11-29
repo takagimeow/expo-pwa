@@ -13,9 +13,6 @@ export const HomeNavigator = () => {
       <HomeStack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        initialParams={{
-          refreshedDate: new Date().getTime(),
-        }}
         options={{
           headerTitle: 'メモカレンダー',
         }}

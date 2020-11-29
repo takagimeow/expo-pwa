@@ -4,7 +4,7 @@
     "slug": "pwa",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/memocal_icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -28,18 +28,18 @@
       }
     },
     "web": {
-      "favicon": "./assets/images/favicon.png",
-      "backgroundColor": "アプリケーションの説明",
-      "description": "Expo",
+      "favicon": "./assets/images/memocal_favicon.png",
+      "backgroundColor": "#cc0033",
+      "description": "メモを保存できるカレンダー",
       "dir": "auto",
       "display": "standalone",
       "lang": "ja",
-      "name": "Expo PWA",
+      "name": "メモカレンダー",
       "orientation": "portrait",
-      "scope": "",
-      "shortName": "Expo PWA",
+      "scope": "/",
+      "shortName": "メモカレ",
       "startUrl": "https://takagimeow-expo-pwa.com",
-      "themeColor": "#3740ff",
+      "themeColor": "#cc0033",
       "preferRelatedApplications": false
     }
   }

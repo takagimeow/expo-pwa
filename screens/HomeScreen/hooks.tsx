@@ -10,13 +10,10 @@ import { HomeParamList } from 'types';
 
 type Props = StackScreenProps<HomeParamList, 'HomeScreen'>;
 
-export const useLogic = ({
-  refreshedDate,
-}: {
-  refreshedDate: Props['route']['params']['refreshedDate'];
-}) => {
+export const useLogic = () => {
   const [memo, setMemo] = useState('');
   const calendarCellId: string = useSelector((state: any) => state.calendar.selectedCalendarCellId);
+  const refreshedDate: number = useSelector((state: any) => state.calendar.refreshedDate);
   const dispatch = useDispatch();
 
   useEffect(() => {

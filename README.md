@@ -91,6 +91,12 @@ pwaに必要な設定をapp.jsonファイルに記述します。
 expo build:web
 ``` 
 
+ビルドが終わったら、プロダクションモードで実行します。
+
+```bash
+npx serve web-build
+```
+
 ## ESLintを導入
 
 ```bash

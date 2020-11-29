@@ -18,10 +18,10 @@ export default {
           },
           Home: {
             screens: {
-              HomeScreen: 'home',
+              HomeScreen: '/',
               MemoInputScreen: 'memo',
-            }
-          }
+            },
+          },
         },
       },
       NotFound: '*',

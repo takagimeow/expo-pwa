@@ -11,10 +11,7 @@ import { useLogic, useStyles } from './hooks';
 type Props = StackScreenProps<HomeParamList, 'HomeScreen'>;
 
 export const HomeScreen = ({ navigation, route }: Props) => {
-  console.log('route.params: ', route.params);
-  const { calendarCellId, memo } = useLogic({
-    refreshedDate: route.params.refreshedDate,
-  });
+  const { calendarCellId, memo } = useLogic();
   const styles = useStyles();
 
   return (
