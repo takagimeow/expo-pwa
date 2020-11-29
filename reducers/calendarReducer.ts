@@ -1,10 +1,15 @@
-import { CALENDAR_MONTH_CHANGE, CALENDAR_SELECTED_CELL_ID_CHANGE } from 'constants/Redux';
+import {
+  CALENDAR_MONTH_CHANGE,
+  CALENDAR_SELECTED_CELL_ID_CHANGE,
+  CALENDAR_REFRESHED_DATE_CHANGE,
+} from 'constants/Redux';
 
 const today = new Date();
 
 const INITIAL_STATE = {
   month: today.getMonth() + 1,
   selectedCalendarCellId: '',
+  refreshedDate: 0,
 };
 
 export const calendarReducer = (
@@ -21,6 +26,11 @@ export const calendarReducer = (
       return {
         ...state,
         selectedCalendarCellId: action.payload,
+      };
+    case CALENDAR_REFRESHED_DATE_CHANGE:
+      return {
+        ...state,
+        refreshedDate: action.payload,
       };
     default:
       return state;

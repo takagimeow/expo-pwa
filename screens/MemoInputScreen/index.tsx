@@ -20,9 +20,12 @@ export const MemoInputScreen = ({ navigation }: Props) => {
   // const styles = useStyles();
   return (
     <KeyboardAvoidingView
-      style={{
-        flex: 1,
-      }}
+      style={[
+        {
+          flex: 1,
+        },
+        tailwind('bg-white'),
+      ]}
       behavior="padding"
     >
       <View style={[tailwind('flex-row justify-between py-4 px-2')]}>

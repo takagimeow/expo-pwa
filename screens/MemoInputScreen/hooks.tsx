@@ -1,11 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackScreenProps } from '@react-navigation/stack';
+import { changeCalendarRefreshedDate } from 'actions/calendarActions';
 import { NoteData } from 'components/Note';
 import { getNoteHeaderText } from 'components/Note/callbacks';
 import _ from 'lodash';
 import React, { useState, useRef, useEffect } from 'react';
 import { TextInput, StyleSheet } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { HomeParamList } from 'types';
 import * as yup from 'yup';
 
@@ -24,6 +25,8 @@ export const useLogic = ({ navigation }: { navigation: Props['navigation'] }) =>
   });
   const textInputRef: React.MutableRefObject<TextInput | null> = useRef(null);
   const calendarCellId = useSelector((state: any) => state.calendar.selectedCalendarCellId);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const headerText = getNoteHeaderText(calendarCellId);
     setDateText(`${headerText.date}（${headerText.dayOfTheWeek}）`);
@@ -85,8 +88,10 @@ export const useLogic = ({ navigation }: { navigation: Props['navigation'] }) =>
         console.log(error);
       }
       // navigation.goBack();
+      const newRefreshedDate = new Date().getTime();
+      dispatch(changeCalendarRefreshedDate(newRefreshedDate));
       navigation.navigate('HomeScreen', {
-        refreshedDate: new Date().getTime(),
+        refreshedDate: newRefreshedDate,
       });
     }
   };
