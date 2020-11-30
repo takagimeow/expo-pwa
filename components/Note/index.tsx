@@ -9,7 +9,7 @@ import { getNoteHeaderText } from './callbacks';
 
 export interface NoteData {
   emoji: string[];
-  label: string;
+  labelId: string;
   memo: string;
 }
 

@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackScreenProps } from '@react-navigation/stack';
 import { changeSelectedCalendarCell, changeIsCalendarInitialized } from 'actions/calendarActions';
 import { NoteData } from 'components/Note';
+import { labels } from 'constants/Calendar';
 import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
@@ -26,6 +27,17 @@ export const useLogic = () => {
       try {
         const jsonValue = await AsyncStorage.getItem(calendarCellId);
         note = jsonValue != null ? JSON.parse(jsonValue) : null;
+      } catch (err) {
+        console.log(err);
+      }
+      /**
+       * labelsを初期化
+       */
+      try {
+        labels.map(async (label) => {
+          const jsonValue = JSON.stringify(label);
+          await AsyncStorage.setItem(label.id, jsonValue);
+        });
       } catch (err) {
         console.log(err);
       }

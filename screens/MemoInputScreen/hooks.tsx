@@ -3,21 +3,28 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { changeCalendarRefreshedDate } from 'actions/calendarActions';
 import { NoteData } from 'components/Note';
 import { getNoteHeaderText } from 'components/Note/callbacks';
+import { Label } from 'constants/Calendar';
 import _ from 'lodash';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useReducer, useCallback } from 'react';
 import { TextInput, StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HomeParamList } from 'types';
 import * as yup from 'yup';
 
+import { reducer } from './redux';
+
 type Props = StackScreenProps<HomeParamList, 'MemoInputScreen'>;
 
 export const useLogic = ({ navigation }: { navigation: Props['navigation'] }) => {
+  const [localState, localDispatch] = useReducer(reducer, {
+    labelId: '',
+    labels: [],
+  });
   const [isLoaded, setIsLoaded] = useState(false);
   const [dateText, setDateText] = useState('');
   const [formikSchema] = useState(
     yup.object().shape({
-      memo: yup.string().min(1).required(),
+      memo: yup.string().max(144),
     }),
   );
   const [formikInitValues, setFormikInitValues] = useState({
@@ -53,11 +60,36 @@ export const useLogic = ({ navigation }: { navigation: Props['navigation'] }) =>
       } catch (err) {
         console.log(err);
       }
+
+      let labels: Label[] = [];
+      try {
+        const storagekeys = await AsyncStorage.getAllKeys();
+        const labelKeys = _.filter(storagekeys, (storageKey) => {
+          return storageKey.match(/^label_(.*)$/g);
+        }) as string[];
+        labels = await Promise.all(
+          labelKeys.map(async (labelId) => {
+            const jsonValue = await AsyncStorage.getItem(labelId);
+            const label: Label = jsonValue != null ? JSON.parse(jsonValue) : null;
+            return label;
+          }),
+        );
+        localDispatch({
+          type: 'changeLabels',
+          payload: labels,
+        });
+      } catch (err) {
+        console.log(err);
+      }
       if (_.isNil(note)) {
         console.log('保存されたメモはありまえせんでした');
       } else {
         setFormikInitValues({
           memo: note.memo,
+        });
+        localDispatch({
+          type: 'changeLabelId',
+          payload: note?.labelId || '',
         });
         console.log('note.memo: ', note.memo);
       }
@@ -66,11 +98,23 @@ export const useLogic = ({ navigation }: { navigation: Props['navigation'] }) =>
     })();
   }, []);
 
-  const handleDone = async (values: typeof formikInitValues) => {
-    if (_.has(values, 'memo')) {
+  const handlePressLabel = (labelId: string) => {
+    localDispatch({
+      type: 'changeLabelId',
+      payload: labelId,
+    });
+  };
+
+  const handleDone = useCallback(
+    async (values: typeof formikInitValues) => {
+      let note: NoteData | null = {
+        emoji: [],
+        memo: '',
+        labelId: '',
+      };
+
       const { memo } = values;
 
-      let note: NoteData | null = null;
       try {
         const jsonValue = await AsyncStorage.getItem(calendarCellId);
         note = jsonValue != null ? JSON.parse(jsonValue) : null;
@@ -78,18 +122,11 @@ export const useLogic = ({ navigation }: { navigation: Props['navigation'] }) =>
         console.log(err);
       }
 
-      if (_.isNil(note)) {
-        note = {
-          emoji: [],
-          memo: '',
-          label: '',
-        };
-      }
-
       try {
         const jsonValue = JSON.stringify({
           ...note,
-          memo,
+          memo: _.isNil(memo) ? '' : memo,
+          labelId: localState.labelId,
         });
         await AsyncStorage.setItem(calendarCellId, jsonValue);
         console.log(`${calendarCellId}: 保存完了`);
@@ -100,8 +137,9 @@ export const useLogic = ({ navigation }: { navigation: Props['navigation'] }) =>
       const newRefreshedDate = new Date().getTime();
       dispatch(changeCalendarRefreshedDate(newRefreshedDate));
       navigation.navigate('HomeScreen');
-    }
-  };
+    },
+    [localState],
+  );
 
   return {
     isLoaded,
@@ -109,6 +147,8 @@ export const useLogic = ({ navigation }: { navigation: Props['navigation'] }) =>
     formikSchema,
     formikInitValues,
     textInputRef,
+    localState,
+    handlePressLabel,
     handleDone,
   };
 };
