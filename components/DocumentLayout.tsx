@@ -20,7 +20,13 @@ const ListLink = (props: { to: string; children: string; textSize: string }) => 
   </View>
 );
 
-export const Layout = ({ title, children }: { title: string; children: React.ReactElement }) => {
+export const DocumentLayout = ({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactElement;
+}) => {
   const windowWidth = useWindowDimensions().width;
   return (
     <View style={[tailwind('flex justify-center flex-col')]}>
@@ -28,54 +34,18 @@ export const Layout = ({ title, children }: { title: string; children: React.Rea
         <Link to="/" style={{ textShadow: `none`, backgroundImage: `none` }}>
           <Text style={[tailwind('text-2xl font-bold')]}>{title}</Text>
         </Link>
-        <View style={[tailwind('flex flex-1 flex-row justify-end')]}>
-          <ListLink to="/contact/" textSize="text-2xl">
-            Download
-          </ListLink>
-        </View>
-      </View>
-      <View
-        style={[
-          tailwind('w-full py-4'),
-          {
-            backgroundColor: '#e53e3e',
-            height: responsiveScreenHeight(50),
-          },
-          windowWidth > 580 ? null : tailwind('px-4'),
-        ]}
-      >
-        <Image
-          style={[
-            tailwind('w-full h-full rounded-lg'),
-            {
-              resizeMode: 'contain',
-            },
-          ]}
-          source={require('../assets/images/top.png')}
-        />
       </View>
       <View style={[tailwind('flex flex-wrap pb-32')]}>
-        <View style={[tailwind('flex flex-1 self-center')]}>{children}</View>
-      </View>
-      <View
-        style={[
-          tailwind('w-full py-4'),
-          {
-            backgroundColor: '#e53e3e',
-            height: responsiveScreenHeight(50),
-          },
-          windowWidth > 580 ? null : tailwind('px-4'),
-        ]}
-      >
-        <Image
+        <View
           style={[
-            tailwind('w-full h-full rounded-lg'),
+            tailwind('flex flex-1 self-center px-8'),
             {
-              resizeMode: 'contain',
+              width: windowWidth > 580 ? windowWidth * 0.5 : windowWidth,
             },
           ]}
-          source={require('../assets/images/top.png')}
-        />
+        >
+          {children}
+        </View>
       </View>
       {/**
        * footer

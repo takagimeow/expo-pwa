@@ -1,4 +1,4 @@
-import { Layout } from 'components/Layout';
+import { DocumentLayout as Layout } from 'components/DocumentLayout';
 import { graphql } from 'gatsby';
 import React from 'react';
 import { View } from 'react-native';

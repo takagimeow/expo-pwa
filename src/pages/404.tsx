@@ -25,34 +25,8 @@ export default function Home({ data }: any) {
           ]}
         >
           <View style={[tailwind('py-12')]}>
-            <Text style={[tailwind('text-lg')]}>このアプリではかくかくしかじか</Text>
+            <Text style={[tailwind('text-lg')]}>404 Not Found</Text>
           </View>
-          <IntroduceSection
-            headerText="アプリについて"
-            miniHeaderText="サンプル"
-            image={image1}
-            imageBackgroundColor="#ed64a6"
-            paragraph="あいうえおかきくけこさしすせそ"
-            alignment="LEFT"
-          />
-
-          <IntroduceSection
-            headerText="アプリについて"
-            miniHeaderText="サンプル"
-            image={image2}
-            imageBackgroundColor="#38a169"
-            paragraph="あいうえおかきくけこさしすせそ"
-            alignment="RIGHT"
-          />
-
-          <IntroduceSection
-            headerText="アプリについて"
-            miniHeaderText="サンプル"
-            image={image3}
-            imageBackgroundColor="#805ad5"
-            paragraph="あいうえおかきくけこさしすせそ"
-            alignment="LEFT"
-          />
           {/*
           <Text style={[tailwind('text-5xl')]}>Amazing Pandas Eating Things</Text>
           <Text style={[tailwind('text-base')]}>{data.allMarkdownRemark.totalCount} Posts</Text>
