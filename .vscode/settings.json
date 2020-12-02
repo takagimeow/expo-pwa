@@ -15,5 +15,8 @@
     "titleBar.inactiveBackground": "#3740ff99",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.remoteColor": "#3740ff"
+  "peacock.remoteColor": "#3740ff",
+  "cSpell.words": [
+    "frontmatter"
+  ]
 }

@@ -1,0 +1,9 @@
+.markdown-image-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.markdown-image {
+  width: 100vw;
+}
