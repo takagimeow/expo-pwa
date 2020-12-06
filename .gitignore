@@ -19,3 +19,5 @@ components/NeumorphismCalendar
 
 # log
 yarn-error.log
+
+web/firebase-messaging-sw.js

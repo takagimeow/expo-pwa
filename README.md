@@ -311,3 +311,188 @@ export default ({ config }) => ({
   },
 });
 ```
+
+## プッシュ通知に対応させる
+
+まず、サービスワーカーファイルを独自でカスタマイズさせるために、必要なファイルをイジェクトさせます。
+
+* web/expo-service-worker.js
+* web/register-service-worker.js
+
+```bash
+expo customize:web
+
+# web/expo-service-worker.js をスペースキーで選択
+# web/register-service-worker.js をスペースキーで選択
+```
+
+作成されたwebフォルダの中に、firebase-messaging-sw.jsファイルを作成する
+
+```js
+// web/firebase-messaging-sw.js
+/* eslint-disable no-restricted-globals */
+// Give the service worker access to Firebase Messaging.
+// Note that you can only use Firebase Messaging here. Other Firebase libraries
+// are not available in the service worker.
+importScripts('https://www.gstatic.com/firebasejs/8.0.1/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/8.0.1/firebase-messaging.js');
+
+// Initialize the Firebase app in the service worker by passing in
+// your app's Firebase config object.
+// https://firebase.google.com/docs/web/setup#config-object
+firebase.initializeApp({
+  apiKey: '******',
+  authDomain: '******',
+  projectId: '************',
+  storageBucket: '************.appspot.com',
+  messagingSenderId: '******',
+  appId: '******',
+  measurementId: '******',
+});
+
+// Retrieve an instance of Firebase Messaging so that it can handle background
+// messages.
+const messaging = firebase.messaging();
+
+/**
+ * 通知メッセージはFirebase SDK でハンドリングしてくれるが、データメッセージはアプリ側で実装しないといけないので、そのための実装
+messaging.onBackgroundMessage(function (payload) {
+  console.log('[firebase-messaging-sw.js] Received background message ', payload);
+  // Customize notification here
+  const notificationTitle = 'Background Message Title';
+  const notificationOptions = {
+    body: 'Background Message body.',
+    icon: '/firebase-logo.png',
+  };
+
+  self.registration.showNotification(notificationTitle, notificationOptions);
+});
+*/
+```
+
+作成したサービスワーカーファイルをregister-service-worker.jsファイルで登録する
+
+```js
+// web/register-service-worker.js
+/* eslint-env browser */
+
+/**
+ * scope を SW_PUBLIC_SCOPEに設定しているというのは、PWAがSW_PUBLIC_SCOPE内で有効になっているということであり、
+ * そこがPWAのスコープなので、サービスワーカーのファイルもSW_PUBLIC_SCOPEのパス以降に存在することになる。
+ * ただ、このアプリは最初からPWAを想定して作られているため、scopeはルートを表す'/'で、registerするjsファイルも'/' + ファイル名となる。
+ * これで failed to register SW_PUBLIC_SCOPEうんたらかんたらエラーと、mimetype html ほにゃららエラーが発生しなくなる。
+ */
+
+if ('serviceWorker' in navigator && 'register' in navigator.serviceWorker) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker
+      .register('/expo-service-worker.js', { scope: '/' })
+      .then(function (info) {
+        // console.info('Registered service-worker', info);
+      })
+      .catch(function (error) {
+        console.info('Failed to register service-worker', error);
+      });
+    navigator.serviceWorker
+      .register('/firebase-messaging-sw.js', {
+        scope: '/',
+      })
+      .then(function (info) {
+        // console.info('Registered service-worker', info);
+      })
+      .catch(function (error) {
+        console.info('Failed to register service-worker', error);
+      });
+  });
+}
+```
+
+ここまではバックグラウンドでの実装。次はアプリ画面起動中のハンドリングをApp.tsxファイルに実装していく。
+
+```tsx
+// App.tsx
+import { StatusBar } from 'expo-status-bar';
+import _ from 'lodash';
+import React, { useState, useEffect } from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux';
+import { FirebaseProvider, useFirebase } from 'services/firebase';
+import { configureStore } from 'store/configureStore';
+
+import useCachedResources from './hooks/useCachedResources';
+import useColorScheme from './hooks/useColorScheme';
+import Navigation from './navigation';
+
+const store = configureStore();
+
+export const Main = () => {
+  const colorScheme = useColorScheme();
+  const firebase = useFirebase();
+  const [pushToken, setPushToken] = useState('');
+
+  useEffect(() => {
+    if (_.isNil(firebase)) {
+      return () => {};
+    }
+    (async () => {
+      try {
+        const messaging = firebase.messaging();
+        const currentToken = await messaging.getToken();
+        if (_.isNil(currentToken) || currentToken === '') {
+          console.log('No Token available');
+          return;
+        }
+        console.log('FCM token> ', currentToken);
+        setPushToken(currentToken);
+        messaging.onMessage((payload) => {
+          console.log('Message received. ', payload);
+          const { title, ...options } = payload.notification;
+          navigator.serviceWorker.register('web/firebase-messaging-sw.js');
+          function showNotification() {
+            Notification.requestPermission(function (result) {
+              console.log('result: ', result);
+              if (result === 'granted') {
+                navigator.serviceWorker.ready.then(function (registration) {
+                  registration.showNotification(payload.notification.title, {
+                    body: payload.notification.body,
+                    tag: payload.notification.tag,
+                  });
+                });
+              }
+            });
+          }
+          showNotification();
+        });
+      } catch (err) {
+        console.log('An error ocurred while retrieving token. ', err);
+      }
+    })();
+
+    return () => {};
+  }, []);
+
+  return (
+    <SafeAreaProvider>
+      <Navigation colorScheme={colorScheme} />
+      <StatusBar />
+    </SafeAreaProvider>
+  );
+};
+
+export default function App() {
+  const isLoadingComplete = useCachedResources();
+
+  if (!isLoadingComplete) {
+    return null;
+  }
+  return (
+    <FirebaseProvider>
+      <Provider store={store}>
+        <Main />
+      </Provider>
+    </FirebaseProvider>
+  );
+}
+```
+
+これで実装は完成。
