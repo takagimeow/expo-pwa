@@ -393,16 +393,6 @@ if ('serviceWorker' in navigator && 'register' in navigator.serviceWorker) {
       .catch(function (error) {
         console.info('Failed to register service-worker', error);
       });
-    navigator.serviceWorker
-      .register('/firebase-messaging-sw.js', {
-        scope: '/',
-      })
-      .then(function (info) {
-        // console.info('Registered service-worker', info);
-      })
-      .catch(function (error) {
-        console.info('Failed to register service-worker', error);
-      });
   });
 }
 ```

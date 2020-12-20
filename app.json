@@ -38,7 +38,7 @@
       "orientation": "portrait",
       "scope": "/",
       "shortName": "メモカレ",
-      "startUrl": "https://takagimeow-expo-pwa.com",
+      "startUrl": "/",
       "themeColor": "#cc0033",
       "preferRelatedApplications": false
     }
